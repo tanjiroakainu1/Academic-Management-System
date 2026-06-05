@@ -1,18 +1,10 @@
 import { useMemo } from 'react'
+import { CHART_PALETTE } from '../constants/theme'
 import { useData } from '../context/DataContext'
 import { roleLabels } from '../utils/auth'
 import type { UserRole } from '../types'
 
-export const CHART_PALETTE = [
-  '#3b82f6',
-  '#8b5cf6',
-  '#10b981',
-  '#f59e0b',
-  '#f43f5e',
-  '#06b6d4',
-  '#6366f1',
-  '#ec4899',
-] as const
+export { CHART_PALETTE }
 
 export function useSystemAnalytics() {
   const data = useData()
@@ -54,8 +46,8 @@ export function useSystemAnalytics() {
 
     const gpaBuckets = [
       { range: '3.5 – 4.0', count: 0, fill: '#10b981' },
-      { range: '3.0 – 3.5', count: 0, fill: '#3b82f6' },
-      { range: '2.5 – 3.0', count: 0, fill: '#8b5cf6' },
+      { range: '3.0 – 3.5', count: 0, fill: CHART_PALETTE[1] },
+      { range: '2.5 – 3.0', count: 0, fill: CHART_PALETTE[3] },
       { range: 'Below 2.5', count: 0, fill: '#f59e0b' },
     ]
     students.forEach((s) => {
@@ -120,8 +112,8 @@ export function useSystemAnalytics() {
     ]
 
     const studentStatus = [
-      { status: 'Enrolled', count: students.filter((s) => s.status === 'enrolled').length, fill: '#3b82f6' },
-      { status: 'Graduated', count: students.filter((s) => s.status === 'graduated').length, fill: '#8b5cf6' },
+      { status: 'Enrolled', count: students.filter((s) => s.status === 'enrolled').length, fill: CHART_PALETTE[0] },
+      { status: 'Graduated', count: students.filter((s) => s.status === 'graduated').length, fill: CHART_PALETTE[1] },
       { status: 'Inactive', count: students.filter((s) => s.status === 'inactive').length, fill: '#94a3b8' },
     ]
 

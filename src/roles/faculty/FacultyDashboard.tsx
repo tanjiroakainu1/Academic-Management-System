@@ -6,11 +6,11 @@ import { useFacultyCourses } from '../../hooks/useRoleData'
 
 const links = [
   { label: 'My Courses', path: 'courses', icon: BookOpen, color: 'bg-gradient-to-br from-emerald-500 to-teal-600', description: 'Assigned classes' },
-  { label: 'Attendance', path: 'attendance', icon: ClipboardCheck, color: 'bg-gradient-to-br from-blue-500 to-blue-600', description: 'Track presence' },
-  { label: 'Materials', path: 'materials', icon: Upload, color: 'bg-gradient-to-br from-violet-500 to-purple-600', description: 'Upload resources' },
-  { label: 'Assignments', path: 'assignments', icon: FileText, color: 'bg-gradient-to-br from-amber-500 to-orange-500', description: 'Quizzes & tasks' },
-  { label: 'Grades', path: 'grades', icon: Award, color: 'bg-gradient-to-br from-rose-500 to-pink-600', description: 'Record scores' },
-  { label: 'Performance', path: 'performance', icon: TrendingUp, color: 'bg-gradient-to-br from-indigo-500 to-blue-600', description: 'Student analytics' },
+  { label: 'Attendance', path: 'attendance', icon: ClipboardCheck, color: 'bg-gradient-to-br from-emerald-500 to-emerald-600', description: 'Track presence' },
+  { label: 'Materials', path: 'materials', icon: Upload, color: 'bg-gradient-to-br from-teal-500 to-teal-600', description: 'Upload resources' },
+  { label: 'Assignments', path: 'assignments', icon: FileText, color: 'bg-gradient-to-br from-green-500 to-emerald-600', description: 'Quizzes & tasks' },
+  { label: 'Grades', path: 'grades', icon: Award, color: 'bg-gradient-to-br from-emerald-600 to-teal-700', description: 'Record scores' },
+  { label: 'Performance', path: 'performance', icon: TrendingUp, color: 'bg-gradient-to-br from-green-500 to-emerald-600', description: 'Student analytics' },
   { label: 'Class Reports', path: 'reports', icon: BarChart3, color: 'bg-gradient-to-br from-slate-600 to-slate-800', description: 'Generate reports' },
 ]
 

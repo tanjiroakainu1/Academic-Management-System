@@ -54,7 +54,7 @@ export function ChartCard({
   subtitle,
   children,
   className = '',
-  accent = 'from-blue-500 to-violet-600',
+  accent = 'from-emerald-500 to-teal-600',
 }: {
   title: string
   subtitle?: string
@@ -137,12 +137,12 @@ export function ActivityTrendChart({ data }: { data: { month: string; enrollment
       <AreaChart data={data} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
         <defs>
           <linearGradient id="enrollGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.4} />
-            <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
+            <stop offset="0%" stopColor="#059669" stopOpacity={0.4} />
+            <stop offset="100%" stopColor="#059669" stopOpacity={0} />
           </linearGradient>
           <linearGradient id="assignGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.4} />
-            <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0} />
+            <stop offset="0%" stopColor="#14b8a6" stopOpacity={0.4} />
+            <stop offset="100%" stopColor="#14b8a6" stopOpacity={0} />
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
@@ -150,8 +150,8 @@ export function ActivityTrendChart({ data }: { data: { month: string; enrollment
         <YAxis tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} allowDecimals={false} />
         <Tooltip content={<ChartTooltip />} />
         <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
-        <Area type="monotone" dataKey="enrollments" name="Enrollments" stroke="#3b82f6" strokeWidth={2.5} fill="url(#enrollGrad)" />
-        <Area type="monotone" dataKey="assignments" name="Assignments" stroke="#8b5cf6" strokeWidth={2.5} fill="url(#assignGrad)" />
+        <Area type="monotone" dataKey="enrollments" name="Enrollments" stroke="#059669" strokeWidth={2.5} fill="url(#enrollGrad)" />
+        <Area type="monotone" dataKey="assignments" name="Assignments" stroke="#14b8a6" strokeWidth={2.5} fill="url(#assignGrad)" />
       </AreaChart>
     </ResponsiveContainer>
   )
@@ -164,8 +164,8 @@ export function DepartmentRadarChart({ data }: { data: { name: string; faculty: 
         <PolarGrid stroke="#e2e8f0" />
         <PolarAngleAxis dataKey="name" tick={{ fontSize: 10, fill: '#64748b' }} />
         <PolarRadiusAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} />
-        <Radar name="Faculty" dataKey="faculty" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.35} strokeWidth={2} />
-        <Radar name="Courses" dataKey="courses" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.35} strokeWidth={2} />
+        <Radar name="Faculty" dataKey="faculty" stroke="#059669" fill="#059669" fillOpacity={0.35} strokeWidth={2} />
+        <Radar name="Courses" dataKey="courses" stroke="#14b8a6" fill="#14b8a6" fillOpacity={0.35} strokeWidth={2} />
         <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
         <Tooltip content={<ChartTooltip />} />
       </RadarChart>
@@ -324,13 +324,13 @@ export function DashboardChartsPreview() {
 
   return (
     <div className="grid gap-4 lg:grid-cols-2">
-      <ChartCard title="Users by Role" subtitle="Live account distribution" accent="from-blue-500 to-indigo-600">
+      <ChartCard title="Users by Role" subtitle="Live account distribution" accent="from-emerald-500 to-teal-600">
         <UsersByRoleChart data={analytics.usersByRole} />
       </ChartCard>
       <ChartCard title="Enrollment Pipeline" subtitle="Approval status breakdown" accent="from-emerald-500 to-teal-600">
         <EnrollmentStatusPie data={analytics.enrollmentByStatus} />
       </ChartCard>
-      <ChartCard title="Activity Trend" subtitle="Enrollments & assignments over time" accent="from-violet-500 to-purple-600" className="lg:col-span-2">
+      <ChartCard title="Activity Trend" subtitle="Enrollments & assignments over time" accent="from-teal-500 to-green-600" className="lg:col-span-2">
         <ActivityTrendChart data={trend} />
       </ChartCard>
     </div>
@@ -349,11 +349,11 @@ export function SystemAnalyticsDashboard() {
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
         {[
           { label: 'Avg GPA', value: summary.avgGpa, accent: 'from-emerald-500 to-teal-600' },
-          { label: 'Seat Use', value: `${summary.systemUtilization}%`, accent: 'from-amber-500 to-orange-500' },
-          { label: 'Approved', value: summary.approvedEnrollments, accent: 'from-blue-500 to-indigo-600' },
-          { label: 'Pending', value: summary.pendingEnrollments, accent: 'from-rose-500 to-pink-600' },
-          { label: 'Faculty', value: summary.totalFaculty, accent: 'from-violet-500 to-purple-600' },
-          { label: 'Depts', value: summary.totalDepartments, accent: 'from-cyan-500 to-blue-600' },
+          { label: 'Seat Use', value: `${summary.systemUtilization}%`, accent: 'from-green-500 to-emerald-600' },
+          { label: 'Approved', value: summary.approvedEnrollments, accent: 'from-emerald-500 to-teal-600' },
+          { label: 'Pending', value: summary.pendingEnrollments, accent: 'from-teal-500 to-cyan-600' },
+          { label: 'Faculty', value: summary.totalFaculty, accent: 'from-teal-500 to-green-600' },
+          { label: 'Depts', value: summary.totalDepartments, accent: 'from-cyan-500 to-teal-600' },
         ].map((item) => (
           <div key={item.label} className={`rounded-2xl bg-gradient-to-br ${item.accent} p-[1px] shadow-sm`}>
             <div className="rounded-[calc(1rem-1px)] bg-white px-3 py-3 text-center sm:px-4 sm:py-4">
@@ -365,40 +365,40 @@ export function SystemAnalyticsDashboard() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <ChartCard title="Users by Role" subtitle="Account distribution across portals" accent="from-blue-500 to-indigo-600">
+        <ChartCard title="Users by Role" subtitle="Account distribution across portals" accent="from-emerald-500 to-teal-600">
           <UsersByRoleChart data={analytics.usersByRole} />
         </ChartCard>
         <ChartCard title="Enrollment Status" subtitle="Pending · Approved · Rejected" accent="from-emerald-500 to-teal-600">
           <EnrollmentStatusPie data={analytics.enrollmentByStatus} />
         </ChartCard>
-        <ChartCard title="Activity Trend" subtitle="Monthly enrollments vs assignments" accent="from-violet-500 to-purple-600" className="lg:col-span-2">
+        <ChartCard title="Activity Trend" subtitle="Monthly enrollments vs assignments" accent="from-teal-500 to-green-600" className="lg:col-span-2">
           <ActivityTrendChart data={trend} />
         </ChartCard>
-        <ChartCard title="Department Radar" subtitle="Faculty & course count per department" accent="from-cyan-500 to-blue-600">
+        <ChartCard title="Department Radar" subtitle="Faculty & course count per department" accent="from-cyan-500 to-teal-600">
           <DepartmentRadarChart data={analytics.departmentStats} />
         </ChartCard>
-        <ChartCard title="Course Utilization" subtitle="Seat fill rate by course" accent="from-amber-500 to-orange-500">
+        <ChartCard title="Course Utilization" subtitle="Seat fill rate by course" accent="from-green-500 to-emerald-600">
           <CourseUtilizationChart data={analytics.courseUtilization} />
         </ChartCard>
         <ChartCard title="GPA Distribution" subtitle="Student performance bands" accent="from-emerald-500 to-green-600">
           <GpaDistributionChart data={analytics.gpaBuckets} />
         </ChartCard>
-        <ChartCard title="Students by Program" subtitle="Enrollment per degree program" accent="from-rose-500 to-pink-600">
+        <ChartCard title="Students by Program" subtitle="Enrollment per degree program" accent="from-emerald-600 to-teal-700">
           <StudentsByProgramChart data={analytics.studentsByProgram} />
         </ChartCard>
-        <ChartCard title="Grade Distribution" subtitle="Letter grades across all records" accent="from-indigo-500 to-violet-600">
+        <ChartCard title="Grade Distribution" subtitle="Letter grades across all records" accent="from-emerald-600 to-teal-700">
           <GradeDistributionChart data={analytics.gradeDistribution} />
         </ChartCard>
         <ChartCard title="Faculty Workload" subtitle="Assigned courses per instructor" accent="from-teal-500 to-emerald-600">
           <FacultyWorkloadChart data={analytics.facultyWorkload} />
         </ChartCard>
-        <ChartCard title="Attendance Overview" subtitle="Present · Late · Absent" accent="from-orange-500 to-amber-500">
+        <ChartCard title="Attendance Overview" subtitle="Present · Late · Absent" accent="from-teal-500 to-emerald-600">
           <AttendanceDonutChart data={analytics.attendanceBreakdown} />
         </ChartCard>
-        <ChartCard title="System Utilization" subtitle="Overall seat capacity usage" accent="from-red-500 to-rose-600">
+        <ChartCard title="System Utilization" subtitle="Overall seat capacity usage" accent="from-emerald-600 to-green-700">
           <SystemUtilizationGauge value={summary.systemUtilization} />
         </ChartCard>
-        <ChartCard title="Student Status" subtitle="Enrolled · Graduated · Inactive" accent="from-blue-500 to-cyan-600">
+        <ChartCard title="Student Status" subtitle="Enrolled · Graduated · Inactive" accent="from-emerald-500 to-cyan-600">
           <EnrollmentStatusPie data={analytics.studentStatus.map((s) => ({ status: s.status, count: s.count, fill: s.fill }))} />
         </ChartCard>
       </div>

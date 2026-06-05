@@ -3,31 +3,31 @@ import type { SystemData } from '../types'
 export const roleThemes = {
   'super-admin': {
     label: 'Super Admin',
-    accent: 'bg-red-600',
-    accentLight: 'bg-red-50',
-    accentText: 'text-red-700',
-    gradient: 'from-red-600 to-rose-700',
+    accent: 'bg-emerald-700',
+    accentLight: 'bg-emerald-50',
+    accentText: 'text-emerald-800',
+    gradient: 'from-emerald-700 to-green-800',
   },
   'academic-administrator': {
     label: 'Academic Administrator',
-    accent: 'bg-indigo-600',
-    accentLight: 'bg-indigo-50',
-    accentText: 'text-indigo-700',
-    gradient: 'from-indigo-600 to-blue-700',
-  },
-  faculty: {
-    label: 'Faculty / Instructor',
     accent: 'bg-emerald-600',
     accentLight: 'bg-emerald-50',
     accentText: 'text-emerald-700',
     gradient: 'from-emerald-600 to-teal-700',
   },
+  faculty: {
+    label: 'Faculty / Instructor',
+    accent: 'bg-teal-600',
+    accentLight: 'bg-teal-50',
+    accentText: 'text-teal-700',
+    gradient: 'from-teal-600 to-emerald-700',
+  },
   student: {
     label: 'Student',
-    accent: 'bg-amber-500',
-    accentLight: 'bg-amber-50',
-    accentText: 'text-amber-700',
-    gradient: 'from-amber-500 to-orange-600',
+    accent: 'bg-green-500',
+    accentLight: 'bg-green-50',
+    accentText: 'text-green-700',
+    gradient: 'from-green-500 to-emerald-600',
   },
 } as const
 

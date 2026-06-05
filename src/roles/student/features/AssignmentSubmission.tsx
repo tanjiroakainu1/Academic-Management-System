@@ -35,7 +35,7 @@ export default function AssignmentSubmission() {
             <ContentCard key={a.id} className="!p-6">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="flex items-start gap-4">
-                  <div className="rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 p-3 text-white shadow-md shadow-blue-200/50">
+                  <div className="rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-3 text-white shadow-md shadow-emerald-200/50">
                     <FileText className="h-5 w-5" />
                   </div>
                   <div>

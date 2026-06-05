@@ -39,18 +39,18 @@ export function DashboardShell({
   stats,
   links,
   basePath,
-  accent = 'from-blue-600 via-indigo-600 to-violet-600',
+  accent = 'from-emerald-600 via-teal-600 to-green-600',
   hideDeveloperCredit = false,
 }: DashboardShellProps) {
   return (
     <div className="animate-fade-in space-y-6 sm:space-y-8">
-      <div className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${accent} p-[1px] shadow-xl shadow-indigo-500/10`}>
+      <div className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${accent} p-[1px] shadow-xl shadow-emerald-500/10`}>
         <div className="relative overflow-hidden rounded-[calc(1.5rem-1px)] bg-white p-5 sm:p-7 lg:p-8">
-          <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-blue-500/10 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-20 -left-16 h-40 w-40 rounded-full bg-violet-500/10 blur-3xl" />
+          <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-emerald-500/10 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-20 -left-16 h-40 w-40 rounded-full bg-teal-500/10 blur-3xl" />
           <div className="relative">
             {greeting && (
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 ring-1 ring-blue-100">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-100">
                 <Sparkles className="h-3.5 w-3.5" />
                 {greeting}
               </div>
@@ -89,7 +89,7 @@ export function SectionHeader({ title, badge, className = '' }: { title: string;
   return (
     <div className={`mb-4 flex flex-wrap items-center justify-between gap-3 sm:mb-5 ${className}`}>
       <div className="flex items-center gap-3">
-        <div className="h-8 w-1 rounded-full bg-gradient-to-b from-blue-500 to-violet-500" />
+        <div className="h-8 w-1 rounded-full bg-gradient-to-b from-emerald-500 to-teal-500" />
         <h3 className="text-base font-bold text-slate-900 sm:text-lg">{title}</h3>
       </div>
       {badge && (
@@ -118,8 +118,8 @@ export function QuickLinkCard({
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">
-          <p className="font-bold text-slate-800 transition-colors group-hover:text-blue-700">{label}</p>
-          <ArrowUpRight className="h-4 w-4 shrink-0 text-slate-300 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-blue-500" />
+          <p className="font-bold text-slate-800 transition-colors group-hover:text-emerald-700">{label}</p>
+          <ArrowUpRight className="h-4 w-4 shrink-0 text-slate-300 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-emerald-500" />
         </div>
         {description && <p className="mt-1.5 text-xs leading-relaxed text-slate-500">{description}</p>}
       </div>
@@ -190,7 +190,7 @@ export function ReportCard({
 }
 
 export function MetricTile({ label, value, accent }: { label: string; value: string | number; accent?: string }) {
-  const gradient = accent ?? 'from-blue-500 to-indigo-600'
+  const gradient = accent ?? 'from-emerald-500 to-teal-600'
   return (
     <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-5">
       <div className={`pointer-events-none absolute -right-4 -top-4 h-16 w-16 rounded-full bg-gradient-to-br ${gradient} opacity-10 blur-xl`} />
@@ -211,7 +211,7 @@ export function ListCard({
 }) {
   const className = `w-full rounded-2xl border p-4 text-left shadow-sm transition-all duration-300 sm:p-5 ${
     active
-      ? 'border-blue-200 bg-blue-50/50 shadow-blue-100/50 hover:shadow-md'
+      ? 'border-emerald-200 bg-emerald-50/50 shadow-emerald-100/50 hover:shadow-md'
       : 'border-slate-200/80 bg-white hover:-translate-y-0.5 hover:shadow-md'
   }`
 

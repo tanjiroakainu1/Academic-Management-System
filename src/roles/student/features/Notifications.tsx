@@ -40,7 +40,7 @@ export default function Notifications() {
           {myNotifications.map((n) => (
             <ListCard key={n.id} onClick={() => markRead(n.id)} active={!n.read}>
               <div className="flex items-start gap-4">
-                <div className={`rounded-xl p-2.5 shadow-sm ${n.read ? 'bg-slate-100 text-slate-400' : 'bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-amber-200/50'}`}>
+                <div className={`rounded-xl p-2.5 shadow-sm ${n.read ? 'bg-slate-100 text-slate-400' : 'bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-emerald-200/50'}`}>
                   <Bell className="h-5 w-5" />
                 </div>
                 <div className="min-w-0 flex-1">

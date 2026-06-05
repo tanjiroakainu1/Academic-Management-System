@@ -1,5 +1,6 @@
 import { Code2, Heart, Sparkles } from 'lucide-react'
 import { DEVELOPER } from '../../constants/developer'
+import { SYSTEM } from '../../constants/system'
 
 type DeveloperCreditVariant = 'sidebar' | 'footer' | 'auth' | 'inline' | 'card'
 
@@ -15,7 +16,7 @@ function DeveloperAvatar({ size = 'md', gradient }: { size?: 'sm' | 'md' | 'lg';
     md: 'h-10 w-10 text-xs',
     lg: 'h-12 w-12 text-sm',
   }
-  const grad = gradient ?? 'from-blue-600 via-violet-600 to-fuchsia-600'
+  const grad = gradient ?? 'from-emerald-600 via-teal-600 to-green-600'
 
   return (
     <div className={`relative shrink-0 ${sizes[size]}`}>
@@ -23,7 +24,7 @@ function DeveloperAvatar({ size = 'md', gradient }: { size?: 'sm' | 'md' | 'lg';
       <div className={`relative flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br ${grad} font-extrabold text-white shadow-lg ring-2 ring-white/30`}>
         {DEVELOPER.initials}
       </div>
-      <Sparkles className="absolute -right-1 -top-1 h-3 w-3 text-amber-400 drop-shadow" />
+      <Sparkles className="absolute -right-1 -top-1 h-3 w-3 text-emerald-400 drop-shadow" />
     </div>
   )
 }
@@ -33,17 +34,17 @@ export function DeveloperCredit({ variant = 'inline', gradient, className = '' }
     return (
       <div className={`mx-3 mb-3 ${className}`}>
         <div className="developer-glow card-shine group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br from-white to-slate-50 p-3 shadow-sm ring-1 ring-slate-100/80 transition-all duration-300 hover:shadow-md">
-          <div className="pointer-events-none absolute -right-4 -top-4 h-16 w-16 rounded-full bg-violet-500/10 blur-xl transition-opacity group-hover:opacity-100" />
+          <div className="pointer-events-none absolute -right-4 -top-4 h-16 w-16 rounded-full bg-emerald-500/10 blur-xl transition-opacity group-hover:opacity-100" />
           <div className="relative flex items-center gap-3">
             <DeveloperAvatar size="md" gradient={gradient} />
             <div className="min-w-0 flex-1">
               <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{DEVELOPER.role}</p>
-              <p className="truncate bg-gradient-to-r from-slate-800 via-blue-700 to-violet-700 bg-clip-text text-sm font-extrabold text-transparent">
+              <p className="truncate bg-gradient-to-r from-slate-800 via-emerald-700 to-teal-700 bg-clip-text text-sm font-extrabold text-transparent">
                 {DEVELOPER.name}
               </p>
               <p className="truncate text-[10px] font-medium text-slate-400">{DEVELOPER.tagline}</p>
             </div>
-            <Code2 className="h-4 w-4 shrink-0 text-slate-300 transition-colors group-hover:text-violet-500" />
+            <Code2 className="h-4 w-4 shrink-0 text-slate-300 transition-colors group-hover:text-emerald-500" />
           </div>
         </div>
       </div>
@@ -58,11 +59,11 @@ export function DeveloperCredit({ variant = 'inline', gradient, className = '' }
             <DeveloperAvatar size="sm" gradient={gradient} />
             <div className="text-center sm:text-left">
               <p className="text-xs text-slate-500">
-                Academic Management System · © {DEVELOPER.year}
+                {SYSTEM.fullName} · © {DEVELOPER.year}
               </p>
               <p className="text-sm font-bold text-slate-700">
                 Developed by{' '}
-                <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
                   {DEVELOPER.name}
                 </span>
               </p>
@@ -89,7 +90,7 @@ export function DeveloperCredit({ variant = 'inline', gradient, className = '' }
           </div>
           <div className="hidden h-10 w-px bg-white/10 sm:block" />
           <div className="flex items-center gap-2 text-xs text-slate-500">
-            <Code2 className="h-4 w-4 text-violet-400" />
+            <Code2 className="h-4 w-4 text-emerald-400" />
             <span>TypeScript · React · Tailwind</span>
           </div>
         </div>
@@ -99,8 +100,8 @@ export function DeveloperCredit({ variant = 'inline', gradient, className = '' }
 
   if (variant === 'card') {
     return (
-      <div className={`relative overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br from-slate-50 via-white to-blue-50/50 p-5 shadow-sm ring-1 ring-slate-100/80 ${className}`}>
-        <div className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-violet-500/10 blur-2xl" />
+      <div className={`relative overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br from-slate-50 via-white to-emerald-50/50 p-5 shadow-sm ring-1 ring-slate-100/80 ${className}`}>
+        <div className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-emerald-500/10 blur-2xl" />
         <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center">
           <DeveloperAvatar size="lg" gradient={gradient} />
           <div className="flex-1">
@@ -122,7 +123,7 @@ export function DeveloperCredit({ variant = 'inline', gradient, className = '' }
 
   return (
     <div className={`flex items-center justify-center gap-2 text-xs text-slate-400 ${className}`}>
-      <Code2 className="h-3.5 w-3.5 text-violet-500" />
+      <Code2 className="h-3.5 w-3.5 text-emerald-500" />
       <span>
         Developed by{' '}
         <span className="font-bold text-slate-600">{DEVELOPER.name}</span>
@@ -133,7 +134,7 @@ export function DeveloperCredit({ variant = 'inline', gradient, className = '' }
 
 export function DeveloperBadge({ className = '' }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600/10 to-violet-600/10 px-2.5 py-1 text-[10px] font-bold text-violet-700 ring-1 ring-violet-200/80 ${className}`}>
+    <span className={`inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-emerald-600/10 to-teal-600/10 px-2.5 py-1 text-[10px] font-bold text-emerald-700 ring-1 ring-emerald-200/80 ${className}`}>
       <Sparkles className="h-3 w-3" />
       {DEVELOPER.name}
     </span>

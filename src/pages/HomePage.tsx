@@ -16,6 +16,7 @@ import { PublicLayout } from '../components/common/PublicLayout'
 import { PublicButton, PublicButtonRow } from '../components/common/PublicButtons'
 import { QuickAccessPanel } from '../components/common/QuickAccessPanel'
 import { DeveloperBadge } from '../components/common/DeveloperCredit'
+import { SYSTEM } from '../constants/system'
 import { allRoles, roleLabels } from '../utils/auth'
 import type { UserRole } from '../types'
 
@@ -30,16 +31,16 @@ const flowSteps = [
   {
     step: '01',
     title: 'Visit the Home Portal',
-    description: 'Explore how the Academic Management System works, who it serves, and what each role can do — no account required.',
+    description: `Explore how ${SYSTEM.fullName} works, who it serves, and what each role can do — no account required.`,
     icon: GraduationCap,
-    color: 'from-blue-500 to-indigo-600',
+    color: 'from-emerald-500 to-emerald-600',
   },
   {
     step: '02',
     title: 'Register or Sign In',
     description: 'New users create an account on the Register page. Returning users sign in with email and password on the dedicated Login page.',
     icon: UserPlus,
-    color: 'from-violet-500 to-purple-600',
+    color: 'from-teal-500 to-teal-600',
   },
   {
     step: '03',
@@ -53,7 +54,7 @@ const flowSteps = [
     title: 'Manage Academics Live',
     description: 'Use the sidebar to access modules. All data is saved live in your browser — enrollments, grades, users, schedules, and more.',
     icon: BarChart3,
-    color: 'from-amber-500 to-orange-500',
+    color: 'from-green-500 to-emerald-600',
   },
 ]
 
@@ -61,22 +62,22 @@ const roleDetails: Record<UserRole, { summary: string; features: string[]; gradi
   'super-admin': {
     summary: 'Full system control — users, roles, departments, records, reports, and backups.',
     features: ['User & role management', 'Academic settings', 'System reports', 'Backup & restore'],
-    gradient: 'from-red-600 to-rose-700',
+    gradient: 'from-emerald-700 to-green-800',
   },
   'academic-administrator': {
     summary: 'Oversee students, faculty, programs, offerings, schedules, and enrollment workflows.',
     features: ['Student & faculty records', 'Course offerings', 'Class schedules', 'Enrollment approval'],
-    gradient: 'from-indigo-600 to-blue-700',
+    gradient: 'from-emerald-600 to-teal-700',
   },
   faculty: {
     summary: 'Manage classes, attendance, materials, assignments, grades, and student performance.',
     features: ['Assigned courses', 'Attendance tracking', 'Learning materials', 'Grade management'],
-    gradient: 'from-emerald-600 to-teal-700',
+    gradient: 'from-teal-600 to-emerald-700',
   },
   student: {
     summary: 'Enroll in courses, view schedules, submit work, track grades, and monitor progress.',
     features: ['Course enrollment', 'Assignment submission', 'Grades & records', 'Notifications'],
-    gradient: 'from-amber-500 to-orange-600',
+    gradient: 'from-green-500 to-emerald-600',
   },
 }
 
@@ -95,18 +96,17 @@ export default function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-16">
         <div className="text-center">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-bold text-slate-300 backdrop-blur-sm">
-            <Sparkles className="h-3.5 w-3.5 text-amber-400" />
-            Welcome to Academic Management System
+            <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
+            Welcome to {SYSTEM.fullName}
           </div>
           <h1 className="text-balance text-2xl font-extrabold tracking-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
             One platform for every{' '}
-            <span className="bg-gradient-to-r from-blue-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-green-400 bg-clip-text text-transparent">
               academic role
             </span>
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base lg:text-lg">
-            A unified portal for Super Admins, Academic Administrators, Faculty, and Students.
-            Register a new account or sign in to access your personalized dashboard.
+            {SYSTEM.description} Register a new account or sign in to access your personalized dashboard.
           </p>
           <div className="mt-5 flex justify-center">
             <DeveloperBadge />
@@ -182,7 +182,7 @@ export default function HomePage() {
                   <ul className="mt-4 space-y-2">
                     {detail.features.map((f) => (
                       <li key={f} className="flex items-center gap-2 text-xs text-slate-400">
-                        <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                         {f}
                       </li>
                     ))}
@@ -205,7 +205,7 @@ export default function HomePage() {
               key={label}
               className="glass-dark rounded-2xl border border-white/10 p-4 text-center transition hover:border-white/20"
             >
-              <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-violet-300">
+              <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-emerald-300">
                 <Icon className="h-5 w-5" />
               </div>
               <p className="text-xs font-bold text-white">{label}</p>
@@ -225,7 +225,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="mt-10 rounded-3xl border border-white/10 bg-gradient-to-r from-blue-600/20 to-violet-600/20 p-8 text-center backdrop-blur-sm">
+        <div className="mt-10 rounded-3xl border border-white/10 bg-gradient-to-r from-emerald-600/20 to-teal-600/20 p-8 text-center backdrop-blur-sm">
           <h3 className="text-lg font-extrabold text-white sm:text-xl">Ready to get started?</h3>
           <p className="mx-auto mt-2 max-w-lg text-sm text-slate-300">
             Registration and login are separate — create a new account or sign in to your existing one.

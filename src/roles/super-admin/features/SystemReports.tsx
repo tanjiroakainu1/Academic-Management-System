@@ -23,7 +23,7 @@ export default function SystemReports() {
       title="System Reports"
       description="Live analytics dashboards and exportable system-wide academic reports."
       actions={
-        <div className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 px-4 py-2 text-xs font-bold text-white shadow-md sm:text-sm">
+        <div className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-4 py-2 text-xs font-bold text-white shadow-md sm:text-sm">
           <BarChart3 className="h-4 w-4" />
           {summary.totalStudents} students tracked
         </div>
@@ -32,17 +32,17 @@ export default function SystemReports() {
       {generated && <AlertMessage type="success" message={`${generated} generated successfully! Download ready.`} />}
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
-        <MetricTile label="Total Students" value={students.length} accent="from-blue-500 to-indigo-600" />
+        <MetricTile label="Total Students" value={students.length} accent="from-emerald-500 to-teal-600" />
         <MetricTile label="Active Enrollments" value={enrollments.filter((e) => e.status === 'approved').length} accent="from-emerald-500 to-teal-600" />
-        <MetricTile label="Courses Offered" value={courses.length} accent="from-violet-500 to-purple-600" />
-        <MetricTile label="Pending Enrollments" value={enrollments.filter((e) => e.status === 'pending').length} accent="from-amber-500 to-orange-500" />
+        <MetricTile label="Courses Offered" value={courses.length} accent="from-teal-500 to-green-600" />
+        <MetricTile label="Pending Enrollments" value={enrollments.filter((e) => e.status === 'pending').length} accent="from-green-500 to-emerald-600" />
       </div>
 
       <SystemAnalyticsDashboard />
 
       <div>
         <h3 className="mb-4 flex items-center gap-2 text-base font-bold text-slate-900 sm:text-lg">
-          <span className="h-6 w-1 rounded-full bg-gradient-to-b from-rose-500 to-pink-600" />
+          <span className="h-6 w-1 rounded-full bg-gradient-to-b from-emerald-500 to-teal-600" />
           Generate Reports
         </h3>
         <div className="space-y-3">

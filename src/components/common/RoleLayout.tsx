@@ -28,8 +28,10 @@ import {
   Users,
   X,
 } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { Children, isValidElement, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { DeveloperCredit } from './DeveloperCredit'
+import { SYSTEM } from '../../constants/system'
 import { roleThemes } from '../../data/mockData'
 import { useAuth } from '../../context/AuthContext'
 import type { NavItem, UserRole } from '../../types'
@@ -125,12 +127,14 @@ export function RoleLayout({ role, basePath, navItems }: RoleLayoutProps) {
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
 
+  const closeSidebar = () => setSidebarOpen(false)
+
   const handleLogout = () => {
+    setUserMenuOpen(false)
+    closeSidebar()
     logout()
     navigate('/')
   }
-
-  const closeSidebar = () => setSidebarOpen(false)
 
   const sidebarContent = (
     <>
@@ -142,7 +146,7 @@ export function RoleLayout({ role, basePath, navItems }: RoleLayoutProps) {
               <GraduationCap className="h-6 w-6" />
             </div>
             <div className="min-w-0">
-              <p className="truncate text-sm font-extrabold leading-tight tracking-tight">Academic MS</p>
+              <p className="truncate text-sm font-extrabold leading-tight tracking-tight">{SYSTEM.shortName}</p>
               <p className="truncate text-xs font-medium text-white/85">{theme.label}</p>
             </div>
           </div>
@@ -203,13 +207,6 @@ export function RoleLayout({ role, basePath, navItems }: RoleLayoutProps) {
         >
           <User className="h-4 w-4" /> Profile
         </button>
-        <button
-          type="button"
-          onClick={handleLogout}
-          className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50"
-        >
-          <LogOut className="h-4 w-4" /> Sign Out
-        </button>
       </div>
     </>
   )
@@ -247,11 +244,11 @@ export function RoleLayout({ role, basePath, navItems }: RoleLayoutProps) {
               </button>
               <div className="min-w-0 lg:hidden">
                 <p className="truncate text-sm font-bold text-slate-900">{theme.label}</p>
-                <p className="truncate text-xs text-slate-500">Academic MS</p>
+                <p className="truncate text-xs text-slate-500">{SYSTEM.shortName}</p>
               </div>
               <div className="hidden min-w-0 lg:block">
                 <p className="text-sm font-semibold text-slate-800">{theme.label} Portal</p>
-                <p className="text-xs text-slate-500">Academic Management System</p>
+                <p className="text-xs text-slate-500">{SYSTEM.fullName}</p>
               </div>
             </div>
 
@@ -264,11 +261,14 @@ export function RoleLayout({ role, basePath, navItems }: RoleLayoutProps) {
                 <Bell className="h-5 w-5" />
                 <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-rose-500 ring-2 ring-white" />
               </button>
-              <div className="relative hidden sm:block" ref={userMenuRef}>
+
+              <div className="relative" ref={userMenuRef}>
                 <button
                   type="button"
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-sm shadow-sm transition hover:bg-slate-50 sm:px-3 sm:py-2"
+                  className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white p-1.5 text-sm shadow-sm transition hover:bg-slate-50 sm:px-2.5 sm:py-1.5 md:px-3 md:py-2"
+                  aria-label="Account menu"
+                  aria-expanded={userMenuOpen}
                 >
                   <div className={`flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br ${theme.gradient} text-xs font-bold text-white`}>
                     {user?.name?.charAt(0) ?? 'U'}
@@ -280,6 +280,7 @@ export function RoleLayout({ role, basePath, navItems }: RoleLayoutProps) {
                     <div className="border-b border-slate-100 px-4 py-3">
                       <p className="truncate text-sm font-semibold text-slate-800">{user?.name}</p>
                       <p className="truncate text-xs text-slate-500">{user?.email}</p>
+                      <p className="mt-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-600">{theme.label}</p>
                     </div>
                     <button
                       type="button"
@@ -287,20 +288,23 @@ export function RoleLayout({ role, basePath, navItems }: RoleLayoutProps) {
                         setUserMenuOpen(false)
                         navigate(`${basePath}/profile`)
                       }}
-                      className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm hover:bg-slate-50"
+                      className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50"
                     >
                       <User className="h-4 w-4 text-slate-400" /> Profile
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleLogout}
-                      className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50"
-                    >
-                      <LogOut className="h-4 w-4" /> Sign Out
                     </button>
                   </div>
                 )}
               </div>
+
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-red-200/90 bg-red-50 px-2.5 py-2 text-xs font-bold text-red-600 shadow-sm transition hover:border-red-300 hover:bg-red-100 active:scale-[0.97] sm:px-3 sm:py-2.5 sm:text-sm"
+                aria-label="Sign out"
+              >
+                <LogOut className="h-4 w-4 shrink-0" />
+                <span className="hidden sm:inline">Sign Out</span>
+              </button>
             </div>
           </div>
         </header>
@@ -327,13 +331,17 @@ interface FeaturePageProps {
 export function FeaturePage({ title, description, children, actions }: FeaturePageProps) {
   return (
     <div className="animate-fade-in space-y-4 sm:space-y-6">
-      <div className="accent-bar relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-200/50 [--accent-from:#3b82f6] [--accent-to:#8b5cf6] sm:flex-row sm:items-start sm:justify-between sm:p-6">
-        <div className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-blue-500/5 blur-2xl" />
+      <div className="accent-bar relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-200/50 [--accent-from:#059669] [--accent-to:#14b8a6] sm:flex-row sm:items-start sm:justify-between sm:p-6">
+        <div className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-emerald-500/5 blur-2xl" />
         <div className="relative min-w-0 flex-1 pl-3 sm:pl-4">
           <h2 className="text-xl font-extrabold tracking-tight text-slate-900 sm:text-2xl">{title}</h2>
           <p className="mt-1.5 text-sm leading-relaxed text-slate-500">{description}</p>
         </div>
-        {actions && <div className="relative flex w-full flex-wrap gap-2 sm:w-auto sm:shrink-0">{actions}</div>}
+        {actions && (
+          <div className="relative flex w-full flex-col gap-2 sm:w-auto sm:shrink-0 sm:flex-row sm:flex-wrap">
+            {actions}
+          </div>
+        )}
       </div>
       {children}
     </div>
@@ -341,10 +349,10 @@ export function FeaturePage({ title, description, children, actions }: FeaturePa
 }
 
 const statAccents = [
-  'from-blue-500 to-blue-600',
-  'from-violet-500 to-purple-600',
-  'from-emerald-500 to-teal-600',
-  'from-amber-500 to-orange-500',
+  'from-emerald-500 to-emerald-600',
+  'from-teal-500 to-teal-600',
+  'from-green-500 to-emerald-600',
+  'from-cyan-500 to-teal-600',
 ]
 
 interface StatCardProps {
@@ -406,6 +414,25 @@ function useModalEffects(open: boolean, onClose: () => void) {
   }, [open, onClose])
 }
 
+function splitModalChildren(children: ReactNode) {
+  const body: ReactNode[] = []
+  let footer: ReactNode = null
+
+  Children.forEach(children, (child) => {
+    if (isValidElement(child) && (child.type as { displayName?: string }).displayName === 'ModalFooter') {
+      footer = child
+    } else {
+      body.push(child)
+    }
+  })
+
+  return { body, footer }
+}
+
+function ModalOverlay({ children }: { children: ReactNode }) {
+  return createPortal(children, document.body)
+}
+
 interface ModalProps {
   open: boolean
   title: string
@@ -419,57 +446,63 @@ export function Modal({ open, title, description, onClose, children, size = 'md'
   useModalEffects(open, onClose)
   if (!open) return null
 
+  const { body, footer } = splitModalChildren(children)
+
   return (
-    <div className="fixed inset-0 z-[60] flex items-end justify-center sm:items-center sm:p-4">
-      <button
-        type="button"
-        className="absolute inset-0 bg-slate-900/75 backdrop-blur-md"
-        aria-label="Close modal"
-        onClick={onClose}
-      />
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-title"
-        className={`modal-panel animate-modal-up relative z-10 flex max-h-[min(92vh,900px)] w-full flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl shadow-slate-900/25 ring-1 ring-slate-200/80 sm:max-h-[90vh] sm:rounded-3xl ${modalSizes[size]}`}
-      >
-        <div className="flex shrink-0 justify-center pt-3 sm:hidden">
-          <div className="h-1.5 w-12 rounded-full bg-slate-200" />
-        </div>
-
-        <div className="relative shrink-0 border-b border-slate-100 bg-gradient-to-r from-slate-50 via-white to-blue-50/40 px-4 py-4 sm:px-6 sm:py-5">
-          <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-blue-500 to-violet-500 sm:w-1.5" />
-          <div className="flex items-start justify-between gap-3 pl-3 sm:pl-4">
-            <div className="min-w-0 flex-1">
-              <h3 id="modal-title" className="text-base font-extrabold tracking-tight text-slate-900 sm:text-lg">
-                {title}
-              </h3>
-              {description && (
-                <p className="mt-1 text-xs leading-relaxed text-slate-500 sm:text-sm">{description}</p>
-              )}
-            </div>
-            <button
-              type="button"
-              onClick={onClose}
-              className="shrink-0 rounded-xl border border-slate-200 bg-white p-2 text-slate-400 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-700"
-              aria-label="Close"
-            >
-              <X className="h-4 w-4" />
-            </button>
+    <ModalOverlay>
+      <div className="fixed inset-0 z-[100] flex items-end justify-center sm:items-center sm:p-4">
+        <button
+          type="button"
+          className="absolute inset-0 bg-slate-900/75 backdrop-blur-md"
+          aria-label="Close modal"
+          onClick={onClose}
+        />
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+          className={`modal-panel animate-modal-up relative z-10 flex w-full max-h-[min(90dvh,900px)] flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl shadow-slate-900/25 ring-1 ring-slate-200/80 sm:max-h-[min(90vh,900px)] sm:rounded-3xl ${modalSizes[size]}`}
+        >
+          <div className="flex shrink-0 justify-center pt-3 sm:hidden">
+            <div className="h-1.5 w-12 rounded-full bg-slate-200" />
           </div>
-        </div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5">
-          {children}
+          <div className="relative shrink-0 border-b border-slate-100 bg-gradient-to-r from-slate-50 via-white to-emerald-50/40 px-4 py-3.5 sm:px-6 sm:py-5">
+            <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-emerald-500 to-teal-500 sm:w-1.5" />
+            <div className="flex items-start justify-between gap-3 pl-3 sm:pl-4">
+              <div className="min-w-0 flex-1">
+                <h3 id="modal-title" className="text-base font-extrabold tracking-tight text-slate-900 sm:text-lg">
+                  {title}
+                </h3>
+                {description && (
+                  <p className="mt-1 text-xs leading-relaxed text-slate-500 sm:text-sm">{description}</p>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={onClose}
+                className="shrink-0 rounded-xl border border-slate-200 bg-white p-2 text-slate-400 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-700"
+                aria-label="Close"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+
+          <div className="modal-body min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5">
+            {body}
+          </div>
+
+          {footer}
         </div>
       </div>
-    </div>
+    </ModalOverlay>
   )
 }
 
 export function ModalFormGrid({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
-    <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${className}`}>
+    <div className={`grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 ${className}`}>
       {children}
     </div>
   )
@@ -481,11 +514,12 @@ export function ModalField({ children, span = 1 }: { children: ReactNode; span?:
 
 export function ModalFooter({ children }: { children: ReactNode }) {
   return (
-    <div className="sticky bottom-0 -mx-4 mt-5 flex flex-col-reverse gap-2.5 border-t border-slate-100 bg-gradient-to-t from-white via-white to-white/90 px-4 py-4 backdrop-blur-sm sm:-mx-6 sm:flex-row sm:justify-end sm:gap-3 sm:px-6">
+    <div className="modal-footer flex shrink-0 flex-col-reverse gap-2.5 border-t border-slate-100 bg-white px-4 py-4 sm:flex-row sm:justify-end sm:gap-3 sm:px-6">
       {children}
     </div>
   )
 }
+ModalFooter.displayName = 'ModalFooter'
 
 interface ActionButtonProps {
   onClick?: () => void
@@ -547,7 +581,7 @@ export function RowActions({
         <button
           type="button"
           onClick={onEdit}
-          className="rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 px-3 py-1.5 text-xs font-bold text-blue-700 shadow-sm ring-1 ring-blue-200/80 transition-all duration-200 hover:from-blue-100 hover:to-indigo-100 hover:shadow-md hover:-translate-y-0.5 sm:text-sm"
+          className="rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 px-3 py-1.5 text-xs font-bold text-emerald-700 shadow-sm ring-1 ring-emerald-200/80 transition-all duration-200 hover:from-emerald-100 hover:to-teal-100 hover:shadow-md hover:-translate-y-0.5 sm:text-sm"
         >
           {editLabel}
         </button>
@@ -607,7 +641,7 @@ export function DataTable({
                 </tr>
               ) : (
                 rows.map((row, i) => (
-                  <tr key={i} className={`border-b border-slate-100 transition last:border-0 hover:bg-blue-50/40 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'}`}>
+                  <tr key={i} className={`border-b border-slate-100 transition last:border-0 hover:bg-emerald-50/40 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'}`}>
                     {row.map((cell, j) => (
                       <td key={j} className="px-4 py-3 text-slate-700 lg:px-5 lg:py-3.5">{cell}</td>
                     ))}
@@ -682,46 +716,48 @@ export function ConfirmModal({
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-end justify-center sm:items-center sm:p-4">
-      <button
-        type="button"
-        className="absolute inset-0 bg-slate-900/75 backdrop-blur-md"
-        aria-label="Close dialog"
-        onClick={onCancel}
-      />
-      <div
-        role="alertdialog"
-        aria-modal="true"
-        className="modal-panel animate-modal-up relative z-10 w-full max-w-md overflow-hidden rounded-t-3xl bg-white shadow-2xl shadow-slate-900/25 ring-1 ring-slate-200/80 sm:rounded-3xl"
-      >
-        <div className="flex shrink-0 justify-center pt-3 sm:hidden">
-          <div className="h-1.5 w-12 rounded-full bg-slate-200" />
-        </div>
-        <div className="border-b border-slate-100 bg-gradient-to-r from-red-50/80 via-white to-rose-50/40 px-4 py-4 sm:px-6 sm:py-5">
-          <div className="flex items-start gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-red-500 to-rose-600 text-white shadow-lg shadow-red-200/50">
-              <AlertTriangle className="h-5 w-5" />
-            </div>
-            <h3 className="pt-1.5 text-base font-extrabold text-slate-900 sm:text-lg">{title}</h3>
+    <ModalOverlay>
+      <div className="fixed inset-0 z-[100] flex items-end justify-center sm:items-center sm:p-4">
+        <button
+          type="button"
+          className="absolute inset-0 bg-slate-900/75 backdrop-blur-md"
+          aria-label="Close dialog"
+          onClick={onCancel}
+        />
+        <div
+          role="alertdialog"
+          aria-modal="true"
+          className="modal-panel animate-modal-up relative z-10 flex w-full max-w-md max-h-[min(90dvh,520px)] flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl shadow-slate-900/25 ring-1 ring-slate-200/80 sm:max-h-none sm:rounded-3xl"
+        >
+          <div className="flex shrink-0 justify-center pt-3 sm:hidden">
+            <div className="h-1.5 w-12 rounded-full bg-slate-200" />
           </div>
-        </div>
-        <div className="px-4 py-5 sm:px-6">
-          <p className="text-sm leading-relaxed text-slate-600">{message}</p>
+          <div className="shrink-0 border-b border-slate-100 bg-gradient-to-r from-red-50/80 via-white to-rose-50/40 px-4 py-4 sm:px-6 sm:py-5">
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-red-500 to-rose-600 text-white shadow-lg shadow-red-200/50">
+                <AlertTriangle className="h-5 w-5" />
+              </div>
+              <h3 className="pt-1.5 text-base font-extrabold text-slate-900 sm:text-lg">{title}</h3>
+            </div>
+          </div>
+          <div className="modal-body min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5">
+            <p className="text-sm leading-relaxed text-slate-600">{message}</p>
+          </div>
           <ModalFooter>
             <ActionButton variant="secondary" onClick={onCancel}>Cancel</ActionButton>
             <ActionButton variant="danger" onClick={onConfirm}>{confirmLabel}</ActionButton>
           </ModalFooter>
         </div>
       </div>
-    </div>
+    </ModalOverlay>
   )
 }
 
 const statusDot: Record<string, string> = {
   active: 'bg-emerald-500',
   inactive: 'bg-slate-400',
-  enrolled: 'bg-blue-500',
-  graduated: 'bg-purple-500',
+  enrolled: 'bg-emerald-500',
+  graduated: 'bg-teal-500',
   pending: 'bg-amber-500',
   approved: 'bg-emerald-500',
   rejected: 'bg-red-500',
@@ -738,8 +774,8 @@ export function StatusBadge({ status }: { status: string }) {
   const colors: Record<string, string> = {
     active: 'bg-emerald-50 text-emerald-700 ring-emerald-200/80',
     inactive: 'bg-slate-100 text-slate-600 ring-slate-200/80',
-    enrolled: 'bg-blue-50 text-blue-700 ring-blue-200/80',
-    graduated: 'bg-purple-50 text-purple-700 ring-purple-200/80',
+    enrolled: 'bg-emerald-50 text-emerald-700 ring-emerald-200/80',
+    graduated: 'bg-teal-50 text-teal-700 ring-teal-200/80',
     pending: 'bg-amber-50 text-amber-700 ring-amber-200/80',
     approved: 'bg-emerald-50 text-emerald-700 ring-emerald-200/80',
     rejected: 'bg-red-50 text-red-700 ring-red-200/80',
@@ -778,7 +814,7 @@ export function FormField({
 }
 
 export const inputClass =
-  'w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-base text-slate-800 shadow-sm transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-500/10 sm:text-sm'
+  'w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-base text-slate-800 shadow-sm transition placeholder:text-slate-400 hover:border-slate-300 focus:border-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 sm:text-sm'
 
 export const selectClass = inputClass
 

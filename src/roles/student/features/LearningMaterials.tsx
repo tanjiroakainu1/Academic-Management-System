@@ -20,7 +20,7 @@ export default function LearningMaterials() {
           {myMaterials.map((m) => (
             <ContentCard key={m.id} className="flex flex-wrap items-center justify-between gap-4 !p-5">
               <div className="flex items-center gap-4">
-                <div className="rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 p-3 text-white shadow-md shadow-amber-200/50">
+                <div className="rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 p-3 text-white shadow-md shadow-emerald-200/50">
                   <File className="h-5 w-5" />
                 </div>
                 <div>

@@ -24,7 +24,7 @@ export default function AcademicProgress() {
       <ContentCard>
         <h3 className="font-semibold text-slate-800">{student?.program ?? 'Program Progress'}</h3>
         <div className="mt-4 h-3 overflow-hidden rounded-full bg-slate-100">
-          <div className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-500 transition-all duration-500" style={{ width: `${progress}%` }} />
+          <div className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 transition-all duration-500" style={{ width: `${progress}%` }} />
         </div>
         <div className="mt-3 flex flex-wrap justify-between gap-2 text-sm">
           <span className="font-medium text-slate-700">{progress.toFixed(0)}% complete</span>

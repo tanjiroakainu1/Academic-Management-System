@@ -8,12 +8,12 @@ import { useData } from '../../context/DataContext'
 import { ArrowRight } from 'lucide-react'
 
 const quickLinks = [
-  { label: 'Manage Users', path: 'users', icon: Users, color: 'bg-gradient-to-br from-blue-500 to-blue-600', description: 'Accounts & registration' },
-  { label: 'Manage Roles', path: 'roles', icon: Shield, color: 'bg-gradient-to-br from-violet-500 to-purple-600', description: 'Access control' },
-  { label: 'Academic Settings', path: 'settings', icon: Settings, color: 'bg-gradient-to-br from-amber-500 to-orange-500', description: 'Semester & grading' },
-  { label: 'Departments', path: 'departments', icon: Building2, color: 'bg-gradient-to-br from-emerald-500 to-teal-600', description: 'Departments & courses' },
-  { label: 'Academic Records', path: 'records', icon: FileText, color: 'bg-gradient-to-br from-indigo-500 to-blue-600', description: 'Student transcripts' },
-  { label: 'System Reports', path: 'reports', icon: BarChart3, color: 'bg-gradient-to-br from-rose-500 to-pink-600', description: 'Analytics & exports' },
+  { label: 'Manage Users', path: 'users', icon: Users, color: 'bg-gradient-to-br from-emerald-500 to-emerald-600', description: 'Accounts & registration' },
+  { label: 'Manage Roles', path: 'roles', icon: Shield, color: 'bg-gradient-to-br from-teal-500 to-teal-600', description: 'Access control' },
+  { label: 'Academic Settings', path: 'settings', icon: Settings, color: 'bg-gradient-to-br from-green-500 to-green-600', description: 'Semester & grading' },
+  { label: 'Departments', path: 'departments', icon: Building2, color: 'bg-gradient-to-br from-emerald-600 to-teal-700', description: 'Departments & courses' },
+  { label: 'Academic Records', path: 'records', icon: FileText, color: 'bg-gradient-to-br from-teal-600 to-emerald-700', description: 'Student transcripts' },
+  { label: 'System Reports', path: 'reports', icon: BarChart3, color: 'bg-gradient-to-br from-cyan-500 to-teal-600', description: 'Analytics & exports' },
   { label: 'Backup & Restore', path: 'backup', icon: Database, color: 'bg-gradient-to-br from-slate-600 to-slate-800', description: 'Data recovery' },
 ]
 
@@ -28,7 +28,7 @@ export default function SuperAdminDashboard() {
         title="Super Admin Dashboard"
         greeting={`Welcome, ${user?.name?.split(' ')[0] ?? 'Admin'}`}
         subtitle="Full system access — manage users, academic structure, records, and system-wide operations."
-        accent="from-red-600 via-rose-600 to-rose-700"
+        accent="from-emerald-700 via-teal-600 to-green-800"
         stats={[
           { label: 'Total Users', value: users.length, icon: <Users className="h-5 w-5" /> },
           { label: 'Students', value: students.length, icon: <Users className="h-5 w-5" /> },

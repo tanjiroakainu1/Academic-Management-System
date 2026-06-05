@@ -16,9 +16,11 @@ import {
   CheckCircle2,
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
+import { AuthPageBranding } from '../components/common/AuthPageBranding'
 import { PublicLayout } from '../components/common/PublicLayout'
 import { QuickAccessPanel } from '../components/common/QuickAccessPanel'
 import { AuthPageNav, PublicButton, PublicButtonRow } from '../components/common/PublicButtons'
+import { SYSTEM } from '../constants/system'
 import {
   AlertMessage,
   FeaturePage,
@@ -44,10 +46,10 @@ const roleIcons: Record<UserRole, typeof Shield> = {
 }
 
 const registerBenefits = [
-  'Choose your role — Student, Faculty, Administrator, or Super Admin',
+  `Join ${SYSTEM.fullName} with the role that fits you`,
+  'Choose Student, Faculty, Administrator, or Super Admin',
   'Instant access to your personalized dashboard after registration',
   'Profile management and live data synced in your browser',
-  'Full access to all modules for your assigned role',
 ]
 
 export function LoginPage() {
@@ -70,13 +72,7 @@ export function LoginPage() {
       <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
         <AuthPageNav page="login" />
 
-        <div className="mb-8 text-center lg:text-left">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 shadow-lg ring-1 ring-white/25 backdrop-blur-md lg:mx-0">
-            <LogIn className="h-7 w-7 text-white" />
-          </div>
-          <h1 className="text-2xl font-extrabold text-white sm:text-3xl">Sign In</h1>
-          <p className="mt-2 text-sm text-slate-400">Sign in manually or use quick access to jump into any role dashboard</p>
-        </div>
+        <AuthPageBranding page="login" className="mb-8 sm:mb-10" />
 
         <div className="grid gap-8 lg:grid-cols-5 lg:gap-10">
           <div className="lg:col-span-2">
@@ -84,7 +80,9 @@ export function LoginPage() {
               onSubmit={handleSubmit}
               className="glass-card animate-fade-in rounded-3xl border border-white/20 p-5 shadow-2xl shadow-black/30 sm:p-8"
             >
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-700 ring-1 ring-blue-100">
+              <AuthPageBranding variant="card" page="login" />
+
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-emerald-700 ring-1 ring-emerald-100">
                 <Sparkles className="h-3.5 w-3.5" />
                 Manual Sign In
               </div>
@@ -179,12 +177,10 @@ export function RegisterPage() {
 
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
           <div className="animate-fade-in">
-            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 shadow-lg ring-1 ring-white/25 backdrop-blur-md">
-              <UserPlus className="h-7 w-7 text-white" />
-            </div>
-            <h1 className="text-2xl font-extrabold text-white sm:text-3xl">Create Account</h1>
-            <p className="mt-2 text-sm leading-relaxed text-slate-400">
-              Registration is separate from sign in. Fill out the form to join the system and go straight to your role dashboard.
+            <AuthPageBranding page="register" className="mb-8" />
+
+            <p className="text-sm leading-relaxed text-slate-400 lg:max-w-md">
+              Create your {SYSTEM.shortName} account — registration is separate from sign in. You&apos;ll be routed to your role dashboard immediately.
             </p>
 
             <div className="mt-8 space-y-4">
@@ -197,7 +193,9 @@ export function RegisterPage() {
             </div>
 
             <div className="glass-dark mt-8 rounded-2xl border border-white/10 p-5">
-              <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Registration flow</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                {SYSTEM.shortName} registration flow
+              </p>
               <ol className="mt-3 space-y-2 text-sm text-slate-300">
                 <li><span className="font-bold text-white">1.</span> Select your role</li>
                 <li><span className="font-bold text-white">2.</span> Enter your details</li>
@@ -207,7 +205,7 @@ export function RegisterPage() {
 
             <p className="mt-6 text-sm text-slate-400">
               Already have an account?{' '}
-              <Link to="/login" className="font-bold text-blue-400 hover:text-blue-300">
+              <Link to="/login" className="font-bold text-emerald-400 hover:text-emerald-300">
                 Sign in here
               </Link>
             </p>
@@ -217,9 +215,11 @@ export function RegisterPage() {
             onSubmit={handleSubmit}
             className="glass-card animate-fade-in h-fit rounded-3xl border border-white/20 p-5 shadow-2xl shadow-black/30 sm:p-8"
           >
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-violet-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-violet-700 ring-1 ring-violet-100">
+            <AuthPageBranding variant="card" page="register" />
+
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-teal-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-teal-700 ring-1 ring-teal-100">
               <GraduationCap className="h-3.5 w-3.5" />
-              New User Registration
+              Join {SYSTEM.fullName}
             </div>
 
             {error && <AlertMessage type="error" message={error} />}
@@ -235,8 +235,8 @@ export function RegisterPage() {
                       onClick={() => setRole(r)}
                       className={`card-shine flex flex-col items-center rounded-xl border-2 p-3 text-center transition-all duration-300 ${
                         role === r
-                          ? 'border-slate-900 bg-gradient-to-br from-slate-800 via-slate-900 to-black text-white shadow-xl ring-2 ring-slate-700/50'
-                          : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5'
+                          ? 'border-emerald-600 bg-gradient-to-br from-emerald-600 via-teal-600 to-green-600 text-white shadow-xl ring-2 ring-emerald-400/40'
+                          : 'border-slate-200 bg-white text-slate-600 hover:border-emerald-200 hover:shadow-md hover:-translate-y-0.5'
                       }`}
                     >
                       <Icon className="mb-1.5 h-5 w-5" />
@@ -262,7 +262,7 @@ export function RegisterPage() {
               </FormField>
             </div>
 
-            <div className="mt-4 rounded-xl bg-gradient-to-r from-slate-50 to-violet-50 px-4 py-3 text-xs text-slate-500 ring-1 ring-slate-100">
+            <div className="mt-4 rounded-xl bg-gradient-to-r from-slate-50 to-emerald-50 px-4 py-3 text-xs text-slate-500 ring-1 ring-slate-100">
               Registering as <strong className="text-slate-800">{roleLabels[role]}</strong> — you&apos;ll go straight to your dashboard.
             </div>
 

@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { ArrowRight, BookOpen, Shield, User, UserCog } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useData } from '../../context/DataContext'
+import { SYSTEM } from '../../constants/system'
 import { allRoles, DEMO_PASSWORD, getDashboardPath, getDemoAccounts, roleLabels } from '../../utils/auth'
 import type { UserRole } from '../../types'
 
@@ -33,10 +34,10 @@ export function QuickAccessPanel({ onError, showRoleGrid = true, compact = false
   return (
     <div className={compact ? 'space-y-4' : 'space-y-6'}>
       <div>
-        <h2 className="text-lg font-bold text-white">Quick Access</h2>
+        <h2 className="text-lg font-bold text-white">{SYSTEM.shortName} Quick Access</h2>
         <p className="mt-1 text-sm text-slate-400">
-          Jump directly to any role dashboard — demo password:{' '}
-          <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-amber-300">{DEMO_PASSWORD}</code>
+          Jump into any {SYSTEM.fullName} role dashboard — demo password:{' '}
+          <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-emerald-300">{DEMO_PASSWORD}</code>
         </p>
       </div>
 
